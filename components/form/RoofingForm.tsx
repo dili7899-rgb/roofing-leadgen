@@ -11,11 +11,12 @@ export const RoofingForm: React.FC = () => {
     roofAge: '10-20 years',
     isOwner: 'Yes',
     address: '',
+    zipCode: '75001', // По подразбиране за тестове (напр. Тексас)
+    stateCode: 'TX',
     firstName: '',
     lastName: '',
     phone: '',
     tcpaAccepted: false,
-    trustedFormCertUrl: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,6 +33,7 @@ export const RoofingForm: React.FC = () => {
 
     setIsSubmitting(true);
 
+    // Улавяне на TrustedForm сертификата от браузъра
     const tfInput = document.querySelector<HTMLInputElement>('input[name="xxTrustedFormCertUrl"]');
     const trustedFormCertUrl = tfInput ? tfInput.value : '';
 
@@ -41,7 +43,8 @@ export const RoofingForm: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          trustedFormCertUrl
+          trustedFormUrl: trustedFormCertUrl, // Съвпада с очакванията на бекенда
+          tcpaAcceptedText: `By checking this box, I authorize USA Roof Damage Check and its contractor partners to contact me by telephone, automated text (SMS), or email...`,
         })
       });
 
@@ -161,18 +164,37 @@ export const RoofingForm: React.FC = () => {
       {step === 4 && (
         <div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">
-            Enter your property address
+            Enter your property address & ZIP
           </h2>
-          <p className="text-sm text-gray-500 mb-4">This helps us match you with licensed local contractors in your ZIP code.</p>
+          <p className="text-sm text-gray-500 mb-4">This helps us match you with licensed local contractors.</p>
+          
           <input
             type="text"
-            placeholder="Address (e.g., 123 Main St, Dallas, TX)"
+            placeholder="Street Address (e.g., 123 Main St)"
             value={formData.address}
             onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-            className="w-full p-4 border-2 border-gray-300 rounded-xl mb-4 focus:border-blue-600 focus:outline-none text-gray-900"
+            className="w-full p-4 border-2 border-gray-300 rounded-xl mb-3 focus:border-blue-600 focus:outline-none text-gray-900"
           />
+
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <input
+              type="text"
+              placeholder="ZIP Code (e.g., 75001)"
+              value={formData.zipCode}
+              onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
+              className="p-4 border-2 border-gray-300 rounded-xl focus:border-blue-600 focus:outline-none text-gray-900"
+            />
+            <input
+              type="text"
+              placeholder="State (e.g., TX)"
+              value={formData.stateCode}
+              onChange={(e) => setFormData({ ...formData, stateCode: e.target.value.toUpperCase() })}
+              className="p-4 border-2 border-gray-300 rounded-xl focus:border-blue-600 focus:outline-none text-gray-900"
+            />
+          </div>
+
           <button
-            disabled={!formData.address}
+            disabled={!formData.address || !formData.zipCode}
             onClick={handleNext}
             className="w-full bg-blue-600 text-white font-bold p-4 rounded-xl disabled:bg-gray-300 hover:bg-blue-700 transition"
           >

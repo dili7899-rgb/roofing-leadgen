@@ -1,5 +1,3 @@
-// lib/routing/waterfall.ts
-
 export interface LeadPayload {
   firstName: string;
   lastName: string;
@@ -20,9 +18,8 @@ export interface RoutingResult {
 }
 
 /**
-  * Helper function to execute API calls with a hard latency cutoff.
-  * Ensures compliance with sub-500ms network response thresholds.
-  */
+ * Helper function to execute API calls with a hard latency cutoff (500ms).
+ */
 async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs = 500) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
@@ -40,11 +37,11 @@ async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs = 5
 }
 
 /**
-  * Cascading Waterfall Lead Router
-  * Tier 1: MarketCall ($120 target)
-  * Tier 2: Lead Smart ($85 target)
-  * Tier 3: Local Fallback Queue
-  */
+ * Cascading Waterfall Lead Router
+ * Tier 1: MarketCall ($120 target) - ACTIVE
+ * Tier 2: Lead Smart (PENDING APPROVAL - Disabled)
+ * Tier 3: Local Fallback Queue
+ */
 export async function routeLeadWaterfall(payload: LeadPayload): Promise<RoutingResult> {
   // -------------------------------------------------------------
   // TIER 1: MarketCall (Primary Buyer - 500ms Hard Limit)
@@ -82,12 +79,13 @@ export async function routeLeadWaterfall(payload: LeadPayload): Promise<RoutingR
       };
     }
   } catch (err) {
-    console.warn('Tier 1 Buyer timed out or rejected request:', err);
+    console.warn('Tier 1 Buyer (MarketCall) timed out or rejected request:', err);
   }
 
   // -------------------------------------------------------------
-  // TIER 2: Lead Smart (Secondary Fallback - 500ms Hard Limit)
+  // TIER 2: Lead Smart (DISABLED UNTIL ACCOUNT APPROVAL)
   // -------------------------------------------------------------
+  /*
   try {
     const res = await fetchWithTimeout(
       'https://api.leadsmartmedia.com/v1/post',
@@ -122,6 +120,7 @@ export async function routeLeadWaterfall(payload: LeadPayload): Promise<RoutingR
   } catch (err) {
     console.warn('Tier 2 Buyer timed out or rejected request:', err);
   }
+  */
 
   // -------------------------------------------------------------
   // TIER 3: Local Outbound Queue (Ensures 0% lost leads)

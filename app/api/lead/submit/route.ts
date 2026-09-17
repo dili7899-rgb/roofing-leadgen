@@ -1,16 +1,44 @@
 import { NextResponse } from 'next/server'
 import { generateDisclosureHash } from '@/lib/consent'
 import { supabaseAdmin } from '@/lib/supabase'
+import { evaluateStateCompliance } from '@/lib/compliance/stateRules'
+import { routeLeadWaterfall, RoutingResult } from '@/lib/routing/waterfall'
+
+async function claimTrustedFormCertificate(certUrl: string) {
+  const TRUSTEDFORM_API_KEY = process.env.TRUSTEDFORM_API_KEY
+  if (!TRUSTEDFORM_API_KEY || !certUrl) {
+    return { success: false, reason: 'Missing API Key or Cert URL' }
+  }
+
+  try {
+    const res = await fetch(certUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${Buffer.from(`X:${TRUSTEDFORM_API_KEY}`).toString('base64')}`,
+      },
+      body: JSON.stringify({
+        vendor: 'USARoofDamageCheck',
+        reason: 'Roof Replacement Lead Retention',
+      }),
+    })
+
+    if (!res.ok) return { success: false, reason: `Retain API HTTP ${res.status}` }
+    const data = await res.json()
+    return { success: true, retainedUrl: data.retained_url || certUrl, response: data }
+  } catch (err: any) {
+    return { success: false, reason: err.message }
+  }
+}
 
 export async function POST(req: Request) {
   try {
     const data = await req.json()
 
     // 1. Capture Client Metadata for Compliance Logging
-    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1'
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || req.headers.get('x-real-ip') || '127.0.0.1'
     const userAgent = req.headers.get('user-agent') || 'Unknown'
-    const disclosureVersion =
-      process.env.NEXT_PUBLIC_CONSENT_DISCLOSURE_VERSION || 'v2026.1'
+    const disclosureVersion = process.env.NEXT_PUBLIC_CONSENT_DISCLOSURE_VERSION || 'v2026.1'
     const pageUrl = data.pageUrl || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
     const plainTextDisclosure = `By clicking "Get My Roofing Assessment," I provide my electronic signature and consent to be contacted by USARoofDamageCheck.com and MarketCall partners at ${data.phone}.`
@@ -24,7 +52,35 @@ export async function POST(req: Request) {
       pageUrl
     )
 
-    // 3. Save Record in Supabase (5-Year TCPA Audit Log)
+    // 3. Claim TrustedForm Certificate (ActiveProspect Retain)
+    const tfResult = await claimTrustedFormCertificate(data.trustedFormCertUrl)
+    const retainedCertUrl = tfResult.retainedUrl || data.trustedFormCertUrl || ''
+
+    // 4. Check State Compliance (Mini-TCPA Daytime Hours)
+    const compliance = evaluateStateCompliance(data.zipCode || '75001', data.state || 'TX')
+
+    // 5. Execute Cascading Waterfall Lead Router (If compliance passes)
+    let routingResult: RoutingResult = {
+      success: true,
+      buyerName: 'Nighttime Queue',
+      payout: 0,
+      leadId: 'NIGHT_QUEUE_' + Date.now(),
+    }
+
+    if (compliance.canCall) {
+      routingResult = await routeLeadWaterfall({
+        firstName: data.firstName || 'Homeowner',
+        lastName: data.lastName || 'Property Owner',
+        phone: data.phone,
+        email: data.email || 'lead@example.com',
+        zipCode: data.zipCode || '75001',
+        trustedFormUrl: retainedCertUrl,
+        jornayaLeadId: data.jornayaToken || undefined,
+        address: data.address,
+      })
+    }
+
+    // 6. Save Record in Supabase (5-Year TCPA Audit Log)
     const { error: dbError } = await supabaseAdmin.from('tcpa_audit_logs').insert([
       {
         phone_number: data.phone || '+15555555555',
@@ -33,49 +89,26 @@ export async function POST(req: Request) {
         user_state: data.state || 'TX',
         ip_address: ip,
         user_agent: userAgent,
-        trusted_form_url: data.trustedFormCertUrl || 'https://cert.trustedform.com/test',
+        trusted_form_url: retainedCertUrl,
         jornaya_leadid: data.jornayaToken || null,
         consent_text: plainTextDisclosure,
         sha256_hash: disclosureHash,
+        status: compliance.canCall ? (routingResult.payout > 0 ? 'SOLD' : 'QUEUED') : 'QUEUED_NIGHTTIME',
+        quarantine_reason: compliance.reason || null,
       },
     ])
 
     if (dbError) {
       console.error('Supabase error:', dbError)
-    } else {
-      console.log('✅ Consent logged successfully in Supabase!')
     }
 
-    // 4. Send to MarketCall API
-    let marketCallData = null
-    try {
-      const response = await fetch('https://www.marketcall.com/api/v1/lead/post', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          api_key: process.env.MARKETCALL_API_KEY || 'TEST_KEY',
-          campaign_id: process.env.MARKETCALL_CAMPAIGN_ID || process.env.MARKETCALL_OFFER_ID || '1234',
-          first_name: data.firstName || 'Homeowner',
-          last_name: data.lastName || 'Property Owner',
-          phone: data.phone,
-          address: data.address || '123 Main St',
-          trusted_form_cert_url: data.trustedFormCertUrl || '',
-          tcpa_hash: disclosureHash,
-          ip: ip,
-          user_agent: userAgent,
-        }),
-      })
-
-      marketCallData = await response.json()
-    } catch (mcErr) {
-      console.warn('MarketCall API warning (Proceeding anyway):', mcErr)
-    }
-
-    // Always return 200 OK if Supabase logging passed
     return NextResponse.json({ 
       success: true, 
       hash: disclosureHash, 
-      marketcall: marketCallData 
+      status: compliance.canCall ? 'SUBMITTED' : 'QUEUED_NIGHTTIME',
+      buyer: routingResult.buyerName,
+      payout: routingResult.payout,
+      leadId: routingResult.leadId
     })
 
   } catch (err: any) {
