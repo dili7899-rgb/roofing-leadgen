@@ -79,7 +79,7 @@ export default function RootLayout({
               <Link href="/privacy-policy" className="hover:underline hover:text-slate-300">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:underline hover:text-slate-300">
+              <Link href="/terms-of-service" className="hover:underline hover:text-slate-300">
                 Terms of Service
               </Link>
               <Link href="/tcpa-consent" className="hover:underline hover:text-slate-300">

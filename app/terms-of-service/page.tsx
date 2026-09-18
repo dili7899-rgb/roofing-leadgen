@@ -1,3 +1,4 @@
+// app/terms-of-service/page.tsx
 import React from 'react';
 import { Metadata } from 'next';
 
