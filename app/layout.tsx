@@ -16,10 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* TrustedForm SDK Injector */}
+        {/* 1. ActiveProspect TrustedForm SDK Injector */}
         <Script
           id="trusted-form"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
@@ -29,6 +29,24 @@ export default function RootLayout({
                   'api.trustedform.com/trustedform.js?provide_referring_url=1&field=xxTrustedFormCertUrl&ping_field=xxTrustedFormPingUrl';
                 var s = document.getElementsByTagName('script')[0];
                 s.parentNode.insertBefore(tf, s);
+              })();
+            `,
+          }}
+        />
+
+        {/* 2. Verisk Jornaya LeadID SDK Injector */}
+        <Script
+          id="jornaya-leadid"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = '//create.lidstatic.com/campaign/b828751d-0000-0000-0000-000000000000.js?snippet_version=2';
+                var le = document.getElementsByTagName('script')[0];
+                le.parentNode.insertBefore(s, le);
               })();
             `,
           }}
@@ -61,11 +79,14 @@ export default function RootLayout({
               <Link href="/privacy-policy" className="hover:underline hover:text-slate-300">
                 Privacy Policy
               </Link>
-              <Link href="/terms-of-service" className="hover:underline hover:text-slate-300">
+              <Link href="/terms" className="hover:underline hover:text-slate-300">
                 Terms of Service
               </Link>
               <Link href="/tcpa-consent" className="hover:underline hover:text-slate-300">
                 TCPA Consent
+              </Link>
+              <Link href="/revoke" className="hover:underline hover:text-slate-300">
+                Do Not Call / Revoke
               </Link>
             </div>
           </div>
