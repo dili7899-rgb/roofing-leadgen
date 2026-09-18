@@ -1,3 +1,4 @@
+// components/form/RoofingForm.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -11,7 +12,7 @@ export const RoofingForm: React.FC = () => {
     roofAge: '10-20 years',
     isOwner: 'Yes',
     address: '',
-    zipCode: '75001', // По подразбиране за тестове (напр. Тексас)
+    zipCode: '75001',
     stateCode: 'TX',
     firstName: '',
     lastName: '',
@@ -33,9 +34,12 @@ export const RoofingForm: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Улавяне на TrustedForm сертификата от браузъра
+    // Улавяне на ActiveProspect TrustedForm & Verisk Jornaya сертификати от DOM-а
     const tfInput = document.querySelector<HTMLInputElement>('input[name="xxTrustedFormCertUrl"]');
+    const jornayaInput = document.querySelector<HTMLInputElement>('input[name="universal_leadid"]');
+
     const trustedFormCertUrl = tfInput ? tfInput.value : '';
+    const jornayaLeadId = jornayaInput ? jornayaInput.value : '';
 
     try {
       const res = await fetch('/api/lead/submit', {
@@ -43,9 +47,10 @@ export const RoofingForm: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          trustedFormUrl: trustedFormCertUrl, // Съвпада с очакванията на бекенда
+          trustedFormUrl: trustedFormCertUrl,
+          jornayaLeadId: jornayaLeadId,
           tcpaAcceptedText: `By checking this box, I authorize USA Roof Damage Check and its contractor partners to contact me by telephone, automated text (SMS), or email...`,
-        })
+        }),
       });
 
       const data = await res.json();
@@ -63,6 +68,10 @@ export const RoofingForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-8">
+      {/* Скрити AdTech полета за авто-попълване от TrustedForm и Jornaya */}
+      <input type="hidden" name="xxTrustedFormCertUrl" id="xxTrustedFormCertUrl" />
+      <input type="hidden" name="universal_leadid" id="leadid_token" />
+
       {step <= 5 && (
         <div className="mb-6 font-medium">
           <div className="flex justify-between text-xs text-gray-500 mb-2 font-medium">
@@ -78,6 +87,7 @@ export const RoofingForm: React.FC = () => {
         </div>
       )}
 
+      {/* STEP 1 */}
       {step === 1 && (
         <div>
           <h2 className="text-xl font-bold text-gray-900 mb-4">
@@ -103,6 +113,7 @@ export const RoofingForm: React.FC = () => {
         </div>
       )}
 
+      {/* STEP 2 */}
       {step === 2 && (
         <div>
           <h2 className="text-xl font-bold text-gray-900 mb-4">
@@ -113,7 +124,7 @@ export const RoofingForm: React.FC = () => {
               { id: 'Storm Damage', label: 'Hail / Wind Storm Damage' },
               { id: 'Active Leak', label: 'Active Roof Leak' },
               { id: 'Old Roof Replacement', label: 'Aging Roof (10+ years old)' },
-              { id: 'General Inspection', label: 'Routine Inspection & Estimate' }
+              { id: 'General Inspection', label: 'Routine Inspection & Estimate' },
             ].map((item) => (
               <button
                 key={item.id}
@@ -132,6 +143,7 @@ export const RoofingForm: React.FC = () => {
         </div>
       )}
 
+      {/* STEP 3 */}
       {step === 3 && (
         <div>
           <h2 className="text-xl font-bold text-gray-900 mb-4">
@@ -142,7 +154,7 @@ export const RoofingForm: React.FC = () => {
               { id: '0-5 years', label: 'Under 5 years' },
               { id: '6-10 years', label: '6 - 10 years' },
               { id: '10-20 years', label: '10 - 20 years (Recommended for replacement)' },
-              { id: 'Unknown', label: 'Not sure' }
+              { id: 'Unknown', label: 'Not sure' },
             ].map((item) => (
               <button
                 key={item.id}
@@ -161,6 +173,7 @@ export const RoofingForm: React.FC = () => {
         </div>
       )}
 
+      {/* STEP 4 */}
       {step === 4 && (
         <div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">
@@ -204,6 +217,7 @@ export const RoofingForm: React.FC = () => {
         </div>
       )}
 
+      {/* STEP 5 */}
       {step === 5 && (
         <form onSubmit={handleSubmitFinal}>
           <h2 className="text-xl font-bold text-gray-900 mb-2">
@@ -250,7 +264,7 @@ export const RoofingForm: React.FC = () => {
             type="submit"
             disabled={isSubmitting}
             data-tf-element-role="submit"
-            className="w-full bg-green-600 text-white font-bold p-4 rounded-xl hover:bg-green-700 transition"
+            className="w-full bg-green-600 text-white font-bold p-4 rounded-xl hover:bg-green-700 transition disabled:bg-gray-400"
           >
             {isSubmitting ? 'Processing Request...' : 'Calculate My Free Estimate'}
           </button>
@@ -258,6 +272,7 @@ export const RoofingForm: React.FC = () => {
         </form>
       )}
 
+      {/* STEP 6 */}
       {step === 6 && (
         <div className="text-center py-8">
           <div className="text-5xl mb-4">✅</div>
