@@ -1,4 +1,3 @@
-// components/form/RoofingForm.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -255,7 +254,7 @@ export const RoofingForm: React.FC = () => {
 
           <div className="mb-4">
             <TcpaCheckbox
-              isChecked={formData.tcpaAccepted}
+              checked={formData.tcpaAccepted}
               onChange={(checked: boolean) => setFormData({ ...formData, tcpaAccepted: checked })}
             />
           </div>
