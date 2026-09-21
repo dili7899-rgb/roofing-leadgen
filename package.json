@@ -10,8 +10,10 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",
     "gray-matter": "^4.0.3",
+    "luxon": "^3.7.2",
     "next": "16.3.1",
     "next-mdx-remote": "^6.0.0",
+    "postgres": "^3.4.9",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "remark-gfm": "^4.0.1",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/luxon": "^3.7.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

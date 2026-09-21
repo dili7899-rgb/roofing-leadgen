@@ -1,39 +1,35 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 
 interface TcpaCheckboxProps {
-  isChecked: boolean;
+  checked: boolean;
   onChange: (checked: boolean) => void;
-  buyerName?: string;
+  sellers?: string[];
 }
 
 export const TcpaCheckbox: React.FC<TcpaCheckboxProps> = ({
-  isChecked,
+  checked,
   onChange,
-  buyerName = 'MarketCall & Network Partners',
+  sellers = ['MarketCall Inc.', 'USARoofDamageCheck Matched Partners']
 }) => {
-  const consentText = `By checking this box and clicking Submit, I provide prior express written consent authorizing USARoofDamageCheck, ${buyerName}, and up to four (4) matching local licensed roofing contractors to contact me at the phone number provided above via automated calls, prerecorded messages, or SMS/MMS text messages regarding roofing services. Consent is voluntary and not a condition of purchasing any service. I also agree to the Terms of Service, Privacy Policy, and TCPA Terms.`;
-
   return (
-    <div className="flex items-start space-x-3 text-left my-4 p-3.5 bg-slate-50 border border-slate-200 rounded-xl shadow-sm">
+    <div className="flex items-start space-x-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
       <input
         type="checkbox"
         id="tcpa-consent"
-        checked={isChecked}
+        checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         className="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
       />
-      <label htmlFor="tcpa-consent" className="text-xs text-slate-600 leading-relaxed cursor-pointer select-none">
-        By checking this box and clicking Submit, I provide prior express written consent authorizing <strong>USARoofDamageCheck</strong>, {buyerName}, and up to four (4) matching contractors to contact me via automated calls or SMS at the phone number provided. Consent is voluntary and not required to purchase. See our{' '}
-        <Link href="/terms" target="_blank" className="text-blue-600 underline font-medium">Terms</Link>,{' '}
-        <Link href="/privacy-policy" target="_blank" className="text-blue-600 underline font-medium">Privacy Policy</Link>, and{' '}
-        <Link href="/tcpa-consent" target="_blank" className="text-blue-600 underline font-medium">TCPA Terms</Link>.
+      <label htmlFor="tcpa-consent" className="text-xs text-slate-600 leading-relaxed cursor-pointer">
+        By checking this box, I provide my express written consent authorizing{' '}
+        <span className="font-semibold text-slate-800">USARoofDamageCheck</span> and its primary matched buyers:{' '}
+        <span className="font-semibold text-slate-800">{sellers.join(', ')}</span> to contact me regarding my roofing inquiry at the phone number and email provided above. I agree that contact may occur via automated telemarketing calls, artificial voice messages, prerecorded calls, and SMS/MMS text messages. I understand that consent is not required as a condition of purchase. Message and data rates may apply. Reply STOP to cancel or visit our{' '}
+        <a href="/revoke" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">
+          Revocation Portal
+        </a>.
       </label>
-      
-      {/* Hidden input captured by logger.ts for the SHA-256 DOM hash */}
-      <input type="hidden" id="tcpa-rendered-text" value={consentText} />
     </div>
   );
 };
