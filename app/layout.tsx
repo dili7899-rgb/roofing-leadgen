@@ -63,15 +63,18 @@ export default function RootLayout({
         <footer className="bg-slate-900 text-slate-400 text-xs py-10 border-t border-slate-800">
           <div className="max-w-6xl mx-auto px-4 space-y-4">
             <p className="leading-relaxed">
-              <strong className="text-slate-200">Matching Service Disclaimer:</strong> USARoofDamageCheck.com is a free independent information portal and matching service operated by an independent digital publisher. We are not a licensed roofing contractor, insurance agency, or construction vendor, and we do not perform home repairs directly.
+              <strong className="text-slate-200">Disclaimer & Matching Disclosure:</strong> USARoofDamageCheck.com is a free independent information portal and matching service operated by independent digital publisher <strong className="text-slate-300">Evtim Radulov</strong>. We are not a licensed roofing contractor, insurance agency, or construction vendor, and we do not perform home repairs directly or provide insurance claims adjusting.
             </p>
             <p className="leading-relaxed">
-              This platform connects property owners with independent, third-party licensed local service providers. We do not guarantee service outcomes, pricing estimates, or contractor availability in all ZIP codes. All trademarks, service marks, and brand names belong to their respective corporate owners.
+              This platform connects property owners with independent, third-party licensed local service providers. All contractors are independent entities, and this site does not warrant or guarantee any work performed. It is the sole responsibility of the homeowner to verify that the hired contractor furnishes the necessary license, bonding, and insurance required for the work being performed.
+            </p>
+            <p className="leading-relaxed">
+              All persons depicted in photos or videos across this website are actors or models and not actual contractors or clients listed on USARoofDamageCheck.com. We do not guarantee service outcomes, pricing estimates, or contractor availability in all ZIP codes. Same-day and 24/7 emergency services are subject to provider participation and technician availability. All trademarks belong to their respective corporate owners.
             </p>
 
-            {/* Lead Smart Verification Marker */}
+            {/* MarketCall Verification Marker */}
             <p className="text-slate-500 text-xs pt-2 border-t border-slate-800/50">
-              Site Owner & Operator: <strong className="text-slate-300">Evtim Radulov</strong> | Verified for Lead Smart Compliance on September 7, 2026
+              Site Owner & Operator: <strong className="text-slate-300">Evtim Radulov</strong> | <strong className="text-green-500">Verified for MarketCall Compliance</strong> on September 7, 2026
             </p>
 
             <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-800 text-slate-500">

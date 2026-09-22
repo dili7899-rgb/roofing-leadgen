@@ -1,7 +1,6 @@
 'use client'; 
 
 import { useState } from 'react'; 
-import Footer from '@/components/Footer';
 
 export default function HomePage() { 
   const [step, setStep] = useState(1); 
@@ -47,8 +46,16 @@ export default function HomePage() {
   }; 
 
   return ( 
-    <main className="min-h-screen bg-slate-50 flex flex-col justify-between p-4"> 
-      <div className="flex-grow flex items-center justify-center py-8">
+    // Removed justify-between to prevent awkward spacing, using standard flex-col
+    <main className="min-h-screen bg-slate-50 flex flex-col p-4"> 
+      
+      {/* HEADER SECTION (Optional but recommended) */}
+      <header className="max-w-7xl mx-auto w-full py-4 px-4 flex justify-between items-center border-b border-slate-100 mb-10">
+        <div className="font-bold text-lg text-slate-900">USARoofDamageCheck.com</div>
+      </header>
+
+      {/* MAIN CONTENT / FORM SECTION */}
+      <div className="flex-grow flex items-center justify-center py-10">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 border border-slate-100"> 
           {step < 5 && ( 
             <div className="w-full bg-slate-100 h-2 rounded-full mb-6 overflow-hidden"> 
@@ -56,7 +63,7 @@ export default function HomePage() {
             </div> 
           )} 
 
-          {/* STEP 1 */}
+          {/* STEP 1 - Address */}
           {step === 1 && ( 
             <div> 
               <h2 className="text-xl font-bold text-slate-900 mb-2">Check Inspection Eligibility</h2> 
@@ -78,7 +85,7 @@ export default function HomePage() {
             </div> 
           )} 
 
-          {/* STEP 2 */}
+          {/* STEP 2 - Ownership */}
           {step === 2 && ( 
             <div> 
               <h2 className="text-xl font-bold text-slate-900 mb-4">Property Ownership</h2> 
@@ -86,13 +93,13 @@ export default function HomePage() {
               <div className="grid grid-cols-2 gap-3 mb-6"> 
                 <button 
                   onClick={() => { setFormData({ ...formData, isOwner: 'YES' }); setStep(3); }} 
-                  className="p-4 border-2 rounded-lg font-bold hover:border-blue-600 text-slate-900 transition"
+                  className="p-4 border-2 rounded-lg font-bold text-lg hover:border-blue-600 hover:bg-blue-50 text-slate-900 transition"
                 >
                   YES
                 </button> 
                 <button 
                   onClick={() => alert('Only available for homeowners.')} 
-                  className="p-4 border-2 rounded-lg font-bold hover:border-red-400 text-slate-900 transition"
+                  className="p-4 border-2 rounded-lg font-bold text-lg hover:border-red-400 hover:bg-red-50 text-slate-900 transition"
                 >
                   NO
                 </button> 
@@ -101,7 +108,7 @@ export default function HomePage() {
             </div> 
           )} 
 
-          {/* STEP 3 */}
+          {/* STEP 3 - Reason */}
           {step === 3 && ( 
             <div> 
               <h2 className="text-xl font-bold text-slate-900 mb-4">Inspection Reason</h2> 
@@ -114,7 +121,7 @@ export default function HomePage() {
                   <button 
                     key={item.id}
                     onClick={() => { setFormData({ ...formData, issueType: item.id }); setStep(4); }} 
-                    className="p-3 border-2 text-left rounded-lg font-medium hover:border-blue-600 text-slate-900 transition"
+                    className="p-3 border-2 text-left rounded-lg font-medium hover:border-blue-600 hover:bg-blue-50 text-slate-900 transition"
                   >
                     {item.label}
                   </button> 
@@ -124,7 +131,7 @@ export default function HomePage() {
             </div> 
           )} 
 
-          {/* STEP 4 - FINAL STEP (NO SMS, DIRECT SUBMIT) */}
+          {/* STEP 4 - Final Submit */}
           {step === 4 && ( 
             <div> 
               <h2 className="text-xl font-bold text-slate-900 mb-2">Contact Details</h2> 
@@ -132,24 +139,24 @@ export default function HomePage() {
                 <input 
                   type="text" 
                   placeholder="First Name" 
-                  className="w-full p-3 border rounded-lg text-slate-900" 
+                  className="w-full p-3 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600" 
                   onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} 
                 /> 
                 <input 
                   type="text" 
                   placeholder="Last Name" 
-                  className="w-full p-3 border rounded-lg text-slate-900" 
+                  className="w-full p-3 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600" 
                   onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} 
                 /> 
                 <input 
                   type="tel" 
                   placeholder="(214) 555-0199" 
-                  className="w-full p-3 border rounded-lg text-slate-900" 
+                  className="w-full p-3 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600" 
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })} 
                 /> 
               </div> 
               <p className="text-[10px] text-slate-400 mb-4">
-                By clicking below, I agree to receive automated calls/SMS regarding roof inspection options. TCPA Compliant.
+                By clicking below, I agree to receive automated calls/SMS regarding roof inspection options. Consent is not a condition of purchase.
               </p> 
               <button 
                 disabled={loading || !formData.phone || !formData.firstName} 
@@ -158,22 +165,22 @@ export default function HomePage() {
               >
                 {loading ? 'Submitting...' : 'Get My Roofing Assessment'}
               </button> 
-              <button onClick={() => setStep(3)} className="mt-3 text-xs text-slate-500 underline block">← Back</button>
+              <button onClick={() => setStep(3)} className="mt-3 text-xs text-slate-500 underline block text-center w-full">← Back</button>
             </div> 
           )} 
 
-          {/* STEP 5 - SUCCESS CONFIRMATION */}
+          {/* STEP 5 - Confirmation */}
           {step === 5 && ( 
-            <div className="text-center py-6"> 
-              <div className="text-5xl mb-4">✅</div> 
+            <div className="text-center py-10"> 
+              <div className="text-6xl mb-4">✅</div> 
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Request Confirmed!</h2> 
-              <p className="text-slate-600 text-sm">An inspector will contact you shortly.</p> 
+              <p className="text-slate-600 text-sm">An inspector will contact you shortly from a local number.</p> 
             </div> 
           )} 
         </div> 
       </div>
 
-      <Footer />
+      {/* OLD FOOTER AND DISCLAIMER REMOVED FROM HERE */}
     </main> 
   ); 
 }
