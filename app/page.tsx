@@ -1,6 +1,7 @@
 'use client'; 
 
 import { useState } from 'react'; 
+import Footer from '@/components/Footer';
 
 export default function HomePage() { 
   const [step, setStep] = useState(1); 
@@ -172,9 +173,7 @@ export default function HomePage() {
         </div> 
       </div>
 
-      <footer className="max-w-3xl mx-auto text-center py-4 text-[11px] text-slate-400 leading-relaxed border-t border-slate-200">
-        Disclaimer: This site is a free service to assist homeowners in connecting with local service providers. All contractors/providers are independent and this site does not warrant or guarantee any work performed. It is the responsibility of the homeowner to verify that the hired contractor furnishes the necessary license and insurance required for the work being performed. All persons depicted in a photo or video are actors or models and not contractors listed on this site.
-      </footer>
+      <Footer />
     </main> 
   ); 
 }
