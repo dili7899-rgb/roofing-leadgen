@@ -1,3 +1,6 @@
+// Force Next.js to evaluate NOAA weather data on every single request in real-time
+export const dynamic = 'force-dynamic';
+
 import { Metadata } from 'next';
 import { fetchNoaaStormData } from '@/lib/noaa';
 import StormDashboard from '@/components/StormDashboard';
