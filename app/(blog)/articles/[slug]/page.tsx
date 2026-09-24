@@ -1,4 +1,3 @@
-
 import { notFound } from 'next/navigation';
 import { getAllArticles, getArticleBySlug } from '@/lib/content';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -159,10 +158,10 @@ export default async function ArticlePage({ params }: PageProps) {
             </p>
           </div>
           <a
-            href="tel:18000000000"
+            href="tel:+18442047475"
             className="w-full md:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-lg py-4 px-8 rounded-2xl shadow-lg hover:shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5 text-center whitespace-nowrap"
           >
-            📞 Call Free Estimate
+            📞 Call (844) 204-7475
           </a>
         </section>
 
