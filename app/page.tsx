@@ -47,16 +47,38 @@ export default function HomePage() {
 
   return ( 
     // Removed justify-between to prevent awkward spacing, using standard flex-col
-    <main className="min-h-screen bg-slate-50 flex flex-col p-4"> 
+    <main className="min-h-screen bg-slate-50 flex flex-col p-4 pb-24 md:pb-4"> 
       
-      {/* HEADER SECTION (Optional but recommended) */}
-      <header className="max-w-7xl mx-auto w-full py-4 px-4 flex justify-between items-center border-b border-slate-100 mb-10">
+      {/* HEADER SECTION */}
+      <header className="max-w-7xl mx-auto w-full py-4 px-4 flex justify-between items-center border-b border-slate-100 mb-6">
         <div className="font-bold text-lg text-slate-900">USARoofDamageCheck.com</div>
+        <a 
+          href="tel:+18442047475" 
+          className="hidden md:flex items-center gap-2 text-sm font-bold text-green-700 bg-green-50 border border-green-200 px-3 py-1.5 rounded-lg hover:bg-green-100 transition"
+        >
+          <span>📞</span>
+          <span>(844) 204-7475</span>
+        </a>
       </header>
 
       {/* MAIN CONTENT / FORM SECTION */}
-      <div className="flex-grow flex items-center justify-center py-10">
+      <div className="flex-grow flex items-center justify-center py-6">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 border border-slate-100"> 
+          
+          {/* TOP CLICK-TO-CALL BANNER */}
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl text-center">
+            <p className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">
+              Need Immediate Assistance? Speak With A Pro:
+            </p>
+            <a
+              href="tel:+18442047475"
+              className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-extrabold text-lg py-3 px-4 rounded-xl shadow transition"
+            >
+              <span>📞</span>
+              <span>CALL NOW: (844) 204-7475</span>
+            </a>
+          </div>
+
           {step < 5 && ( 
             <div className="w-full bg-slate-100 h-2 rounded-full mb-6 overflow-hidden"> 
               <div className="bg-blue-600 h-full transition-all duration-300" style={{ width: `${(step / 4) * 100}%` }}></div> 
@@ -171,16 +193,38 @@ export default function HomePage() {
 
           {/* STEP 5 - Confirmation */}
           {step === 5 && ( 
-            <div className="text-center py-10"> 
+            <div className="text-center py-6"> 
               <div className="text-6xl mb-4">✅</div> 
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Request Confirmed!</h2> 
-              <p className="text-slate-600 text-sm">An inspector will contact you shortly from a local number.</p> 
+              <p className="text-slate-600 text-sm mb-6">An inspector will contact you shortly from a local number.</p> 
+
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                <p className="text-sm font-semibold text-green-900 mb-2">
+                  Want to speak with an agent right now?
+                </p>
+                <a
+                  href="tel:+18442047475"
+                  className="block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg text-lg shadow transition"
+                >
+                  📞 Call Now: (844) 204-7475
+                </a>
+              </div>
             </div> 
           )} 
         </div> 
       </div>
 
-      {/* OLD FOOTER AND DISCLAIMER REMOVED FROM HERE */}
+      {/* MOBILE STICKY CALL BAR */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-3 shadow-2xl md:hidden z-50">
+        <a
+          href="tel:+18442047475"
+          className="flex items-center justify-center gap-2 w-full bg-green-600 active:bg-green-700 text-white font-bold py-3 rounded-xl text-lg shadow"
+        >
+          <span>📞</span>
+          <span>CALL NOW: (844) 204-7475</span>
+        </a>
+      </div>
+
     </main> 
   ); 
 }

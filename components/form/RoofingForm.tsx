@@ -33,7 +33,6 @@ export const RoofingForm: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Улавяне на ActiveProspect TrustedForm & Verisk Jornaya сертификати от DOM-а
     const tfInput = document.querySelector<HTMLInputElement>('input[name="xxTrustedFormCertUrl"]');
     const jornayaInput = document.querySelector<HTMLInputElement>('input[name="universal_leadid"]');
 
@@ -67,9 +66,22 @@ export const RoofingForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-8">
-      {/* Скрити AdTech полета за авто-попълване от TrustedForm и Jornaya */}
       <input type="hidden" name="xxTrustedFormCertUrl" id="xxTrustedFormCertUrl" />
       <input type="hidden" name="universal_leadid" id="leadid_token" />
+
+      {/* CALL BANNER */}
+      <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl text-center">
+        <p className="text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">
+          Need Immediate Assistance? Speak With A Pro Right Away:
+        </p>
+        <a
+          href="tel:+18442047475"
+          className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-extrabold text-lg md:text-xl py-3 px-4 rounded-xl shadow transition"
+        >
+          <span>📞</span>
+          <span>CALL NOW: (844) 204-7475</span>
+        </a>
+      </div>
 
       {step <= 5 && (
         <div className="mb-6 font-medium">
@@ -276,9 +288,21 @@ export const RoofingForm: React.FC = () => {
         <div className="text-center py-8">
           <div className="text-5xl mb-4">✅</div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Request Received!</h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 mb-6">
             Your estimate request has been submitted. A certified local contractor will reach out to you shortly.
           </p>
+
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+            <p className="text-sm font-semibold text-green-900 mb-2">
+              Want to skip the wait? Speak with an agent right now:
+            </p>
+            <a
+              href="tel:+18442047475"
+              className="block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg text-lg shadow transition"
+            >
+              📞 Call Now: (844) 204-7475
+            </a>
+          </div>
         </div>
       )}
     </div>
