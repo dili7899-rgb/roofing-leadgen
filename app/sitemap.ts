@@ -2,7 +2,8 @@ import { MetadataRoute } from 'next';
 import { ALL_ZIPS } from '@/lib/noaa';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://usaroofdamagecheck.com';
+  // Задаваме твърдо твоя реален домейн БЕЗ наклонена черта накрая
+  const baseUrl = 'https://usaroofdamagecheck.com';
 
   const staticPages: MetadataRoute.Sitemap = [
     {
