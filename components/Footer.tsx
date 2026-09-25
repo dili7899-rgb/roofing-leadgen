@@ -33,18 +33,18 @@ export default function Footer() {
             <h4 className="text-white font-medium text-sm mb-3 uppercase tracking-wider">Legal & Compliance</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/privacy-policy" className="hover:text-white transition-colors">
+                <Link href="/privacy" className="hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms-of-service" className="hover:text-white transition-colors">
+                <Link href="/terms" className="hover:text-white transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/tcpa-consent" className="hover:text-white transition-colors">
-                  TCPA Compliance
+                <Link href="/revoke" className="hover:text-white transition-colors">
+                  Do Not Call / Revoke
                 </Link>
               </li>
             </ul>
@@ -53,20 +53,20 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-medium text-sm mb-3 uppercase tracking-wider">Coverage Notice</h4>
             <p className="text-xs text-gray-400 leading-relaxed">
-              Free matching service connecting property owners with independent licensed roofing contractors across all US markets.
+              Matching service connecting property owners with independent licensed roofing contractors across all US markets.
             </p>
           </div>
         </div>
 
         {/* ------------------------------------------------------------- */}
-        {/* COMPLETE UNIFIED LEGAL DISCLAIMER (ORIGINAL + MARKETCALL)     */}
+        {/* COMPLETE UNIFIED LEGAL DISCLAIMER (REQUIRED BY MARKETCALL)    */}
         {/* ------------------------------------------------------------- */}
         <div className="pt-8 border-t border-gray-800 text-[11px] leading-relaxed text-gray-500 space-y-3">
           <p>
-            <strong className="text-gray-400">Disclaimer & Matching Disclosure:</strong> USARoofDamageCheck.com is a free independent information portal and matching service operated by an independent digital publisher. We are not a licensed roofing contractor, insurance agency, or construction vendor, and we do not perform home repairs directly or provide insurance claims adjusting.
+            <strong className="text-gray-400">Disclaimer & Matching Disclosure:</strong> USARoofDamageCheck.com is an independent information portal and matching service operated by an independent digital publisher. We are not a licensed roofing contractor, insurance agency, or construction vendor, and we do not perform home repairs directly or provide insurance claims adjusting.
           </p>
           <p>
-            This site is a free service to assist homeowners in connecting with local service providers. All contractors and providers are independent entities, and this site does not warrant or guarantee any work performed. It is the sole responsibility of the homeowner to verify that the hired contractor furnishes the necessary license, bonding, and insurance required for the work being performed.
+            This site is a matching service to assist homeowners in connecting with local service providers. All contractors and providers are independent entities, and this site does not warrant or guarantee any work performed. It is the sole responsibility of the homeowner to verify that the hired contractor furnishes the necessary license, bonding, and insurance required for the work being performed.
           </p>
           <p>
             All persons depicted in photos or videos across this website are actors or models and not actual contractors or clients listed on this site. All trademarks, service marks, and brand names featured on this site belong to their respective corporate owners.
@@ -84,3 +84,4 @@ export default function Footer() {
     </footer>
   );
 }
+
