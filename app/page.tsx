@@ -8,7 +8,7 @@ export default function HomePage() {
   const [formData, setFormData] = useState({ 
     address: '', 
     isOwner: '', 
-    issueType: 'Storm Damage',
+    issueType: 'Storm & Water Damage',
     firstName: '', 
     lastName: '', 
     phone: '', 
@@ -51,7 +51,7 @@ export default function HomePage() {
       
       {/* HEADER SECTION */}
       <header className="max-w-7xl mx-auto w-full py-4 px-4 flex justify-between items-center border-b border-slate-100 mb-6">
-        <div className="font-bold text-lg text-slate-900">USARoofDamageCheck.com</div>
+        <div className="font-bold text-lg text-slate-900">USA Roof & Water Damage Inspection Network</div>
         <a 
           href="tel:+18442047475" 
           className="hidden md:flex items-center gap-2 text-sm font-bold text-green-700 bg-green-50 border border-green-200 px-3 py-1.5 rounded-lg hover:bg-green-100 transition"
@@ -68,7 +68,7 @@ export default function HomePage() {
           {/* TOP CLICK-TO-CALL BANNER */}
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl text-center">
             <p className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">
-              Need Immediate Assistance? Speak With A Pro:
+              Need Immediate Emergency Assistance? Speak With A Pro:
             </p>
             <a
               href="tel:+18442047475"
@@ -136,9 +136,9 @@ export default function HomePage() {
               <h2 className="text-xl font-bold text-slate-900 mb-4">Inspection Reason</h2> 
               <div className="flex flex-col gap-3 mb-6"> 
                 {[
-                  { id: 'Storm Damage', label: 'Hail / Wind Storm Damage' },
-                  { id: 'Active Leak', label: 'Active Roof Leak' },
-                  { id: 'Old Roof Replacement', label: 'Aging Roof (10+ years old)' }
+                  { id: 'Storm & Water Damage', label: 'Roof Leak & Water Damage' },
+                  { id: 'Hail / Wind Damage', label: 'Hail / Wind Storm Damage' },
+                  { id: 'Old Roof Replacement', label: 'Aging Roof Replacement (10+ yrs)' }
                 ].map((item) => (
                   <button 
                     key={item.id}
@@ -177,15 +177,15 @@ export default function HomePage() {
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })} 
                 /> 
               </div> 
-              <p className="text-[10px] text-slate-400 mb-4">
-                By clicking below, I agree to receive automated calls/SMS regarding roof inspection options. Consent is not a condition of purchase.
+              <p className="text-[10px] text-slate-500 mb-4 leading-relaxed">
+                By clicking below, I agree that USA Roof & Water Damage Inspection Network and its matched roofing, water damage restoration, and emergency mitigation specialists may call or text me at the number provided, including using automated technology, regarding my inspection inquiry. Consent is not a condition of purchase. Message/data rates apply.
               </p> 
               <button 
                 disabled={loading || !formData.phone || !formData.firstName} 
                 onClick={handleSubmit} 
                 className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg disabled:opacity-50 hover:bg-blue-700 transition"
               >
-                {loading ? 'Submitting...' : 'Get My Roofing Assessment'}
+                {loading ? 'Submitting...' : 'Get Emergency Assessment'}
               </button> 
               <button onClick={() => setStep(3)} className="mt-3 text-xs text-slate-500 underline block text-center w-full">← Back</button>
             </div> 
@@ -196,11 +196,11 @@ export default function HomePage() {
             <div className="text-center py-6"> 
               <div className="text-6xl mb-4">✅</div> 
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Request Confirmed!</h2> 
-              <p className="text-slate-600 text-sm mb-6">An inspector will contact you shortly from a local number.</p> 
+              <p className="text-slate-600 text-sm mb-6">An emergency restoration & roof inspector will contact you shortly from a local number.</p> 
 
               <div className="bg-green-50 border border-green-200 rounded-xl p-4">
                 <p className="text-sm font-semibold text-green-900 mb-2">
-                  Want to speak with an agent right now?
+                  Need an immediate on-site response?
                 </p>
                 <a
                   href="tel:+18442047475"
