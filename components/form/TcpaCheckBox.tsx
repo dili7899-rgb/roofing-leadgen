@@ -25,7 +25,7 @@ export const TcpaCheckbox: React.FC<TcpaCheckboxProps> = ({
       <label htmlFor="tcpa-consent" className="text-xs text-slate-600 leading-relaxed cursor-pointer">
         By checking this box, I provide my express written consent authorizing{' '}
         <span className="font-semibold text-slate-800">USARoofDamageCheck</span> and its primary matched buyers:{' '}
-        <span className="font-semibold text-slate-800">{sellers.join(', ')}</span> to contact me regarding my roofing inquiry at the phone number and email provided above. I agree that contact may occur via automated telemarketing calls, artificial voice messages, prerecorded calls, and SMS/MMS text messages. I understand that consent is not required as a condition of purchase. Message and data rates may apply. Reply STOP to cancel or visit our{' '}
+        <span className="font-semibold text-slate-800">{sellers.join(', ')}</span> to contact me regarding my roofing, water damage, and emergency restoration inquiry at the phone number and email provided above. I agree that contact may occur via automated telemarketing calls, artificial voice messages, prerecorded calls, and SMS/MMS text messages. I understand that consent is not required as a condition of purchase. Message and data rates may apply. Reply STOP to cancel or visit our{' '}
         <a href="/revoke" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">
           Revocation Portal
         </a>.
@@ -33,3 +33,4 @@ export const TcpaCheckbox: React.FC<TcpaCheckboxProps> = ({
     </div>
   );
 };
+

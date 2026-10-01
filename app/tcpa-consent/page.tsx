@@ -14,7 +14,7 @@ export default function TcpaConsentPage() {
             1. Prior Express Written Consent (PEWC)
           </h2>
           <p className="text-sm leading-relaxed text-slate-600">
-            By checking the non-prechecked consent box on our web submission forms and submitting your contact information, you provide your explicit prior express written consent authorizing <strong>USARoofDamageCheck</strong> and up to four (4) matching local licensed roofing / storm restoration contractors (and their marketing agents) to contact you. Contact methods may include telemarketing calls, artificial or prerecorded voice messages, automated text messages (SMS/MMS), and emails to the telephone number and email address provided.
+            By checking the non-prechecked consent box on our web submission forms and submitting your contact information, you provide your explicit prior express written consent authorizing <strong>USARoofDamageCheck</strong> and up to four (4) matching local licensed roofing, water damage restoration, and emergency mitigation specialists (and their marketing agents) to contact you. Contact methods may include telemarketing calls, artificial or prerecorded voice messages, automated text messages (SMS/MMS), and emails to the telephone number and email address provided.
           </p>
           <p className="text-sm leading-relaxed text-slate-600">
             You acknowledge that consent is requested using automated dialing systems (ATDS) or artificial technology. <strong>Consent is completely voluntary and is not a condition of purchasing any good, property, or service.</strong>
@@ -56,7 +56,7 @@ export default function TcpaConsentPage() {
             4. Immutable Consent Audit Logging
           </h2>
           <p className="text-sm leading-relaxed text-slate-600">
-            To maintain legal compliance and prevent fraud, USARoofDamageCheck logs immutable cryptographic proof of consent, including SHA-256 session hashes, DOM interaction snapshots, IP address metadata, and active ActiveProspect TrustedForm / Verisk Jornaya certificates.
+            To maintain legal compliance and prevent fraud, USARoofDamageCheck logs immutable cryptographic proof of consent, including SHA-256 session hashes, DOM interaction snapshots, IP address metadata, inbound call telemetry, and active ActiveProspect TrustedForm / Verisk Jornaya certificates.
           </p>
         </section>
 
